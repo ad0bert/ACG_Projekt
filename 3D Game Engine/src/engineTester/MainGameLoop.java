@@ -69,11 +69,6 @@ public class MainGameLoop {
 		fernTexture.setNumberOfRows(2);
 		TexturedModel fern = new TexturedModel(OBJLoader.loadObjModel("fern", loader), fernTexture);
 
-		TexturedModel bobble = new TexturedModel(OBJLoader.loadObjModel("lowPolyTree", loader),
-				new ModelTexture(loader.loadTexture("lowPolyTree")));
-		TexturedModel lamp = new TexturedModel(OBJLoader.loadObjModel("lamp", loader),
-				new ModelTexture(loader.loadTexture("lamp")));
-
 		grass.getTexture().setHasTransparency(true);
 		grass.getTexture().setUseFakeLighting(true);
 		flower.getTexture().setHasTransparency(true);
@@ -81,53 +76,13 @@ public class MainGameLoop {
 		fern.getTexture().setHasTransparency(true);
 
 		List<Entity> entities = new ArrayList<Entity>();
-		Random random = new Random();
-		for (int i = 0; i < 100; i++) {
-			if (i % 7 == 0) {
-				float x = random.nextFloat() * 800 - 400;
-				float z = random.nextFloat() * -600;
-				float y = terrain.getHeightOfTerrain(x, z);
-				entities.add(new Entity(fern, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0,
-						0.9f));
-
-				x = random.nextFloat() * 800 - 400;
-				z = random.nextFloat() * -600;
-				y = terrain.getHeightOfTerrain(x, z);
-				entities.add(new Entity(grass, new Vector3f(x, y, z), 0, 0, 0, 1.8f));
-
-				x = random.nextFloat() * 800 - 400;
-				z = random.nextFloat() * -600;
-				y = terrain.getHeightOfTerrain(x, z);
-				entities.add(new Entity(flower, new Vector3f(x, y, z), 0, 0, 0, 2.3f));
-			}
-
-			if (i % 3 == 0) {
-				float x = random.nextFloat() * 800 - 400;
-				float z = random.nextFloat() * -600;
-				float y = terrain.getHeightOfTerrain(x, z);
-				entities.add(new Entity(bobble, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0,
-						random.nextFloat() * 0.1f + 0.6f));
-
-				x = random.nextFloat() * 800 - 400;
-				z = random.nextFloat() * -600;
-				y = terrain.getHeightOfTerrain(x, z);
-				entities.add(new Entity(tree, new Vector3f(x, y, z), 0, 0, 0, random.nextFloat() * 1 + 4));
-			}
-
-		}
-
+		entities.add(new Entity(fern, 2, new Vector3f(100, -5, -100), 0, 100, 0, 0.9f));
+		entities.add(new Entity(tree, 2, new Vector3f(70, 0, -50), 0, 100, 0, 5f));
+		entities.add(new Entity(tree, 2, new Vector3f(60, 0, -10), 0, 100, 0, 6f));
+		entities.add(new Entity(tree, 2, new Vector3f(80, 0, -60), 0, 100, 0, 7f));
 		List<Light> lights = new ArrayList<Light>();
-		lights.add(new Light(new Vector3f(0, 1000, -7000), new Vector3f(0.4f, 0.4f, 0.4f)));
-		lights.add(new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.002f)));
-		lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2, 2), new Vector3f(1, 0.01f, 0.002f)));
-		lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.01f, 0.002f)));
-
-		// entities.add(new Entity(lamp, new Vector3f(185, -4.7f, -293), 0, 0,
-		// 0, 1));
-		// entities.add(new Entity(lamp, new Vector3f(370, 4.2f, -300), 0, 0, 0,
-		// 1));
-		// entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), 0, 0,
-		// 0, 1));
+		Light sun = new Light(new Vector3f(10000, 10000, -10000), new Vector3f(1.3f, 1.3f, 1.3f));
+		lights.add(sun);
 
 		MasterRenderer renderer = new MasterRenderer(loader);
 
@@ -135,7 +90,7 @@ public class MainGameLoop {
 		TexturedModel playerTexturedModel = new TexturedModel(playerModel,
 				new ModelTexture(loader.loadTexture("playerTexture")));
 
-		Player player = new Player(playerTexturedModel, new Vector3f(100, 5, -150), 0, 180, 0, 0.6f);
+		Player player = new Player(playerTexturedModel, new Vector3f(0, 0, 0), 0, 180, 0, 0.6f);
 		Camera camera = new Camera(player);
 
 		List<GuiTexture> guiTextures = new ArrayList<GuiTexture>();
@@ -174,14 +129,11 @@ public class MainGameLoop {
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 			renderer.renderScene(entities, terrains, lights, camera, new Vector4f(0, -1, 0, 15));
 			
-			waterRenderer.render(waters, camera);
+			waterRenderer.render(waters, camera, sun);
 			guiRenderer.render(guiTextures);
 			
 			DisplayManager.updateDisplay();
 		}
-		// may for later use
-		// player.move(terrain);
-		// renderer.processEntity(player);
 
 		buffers.cleanUp();
 		guiRenderer.cleanUp();
