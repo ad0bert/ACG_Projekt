@@ -2,7 +2,6 @@ package engineTester;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import models.RawModel;
 import models.TexturedModel;
@@ -10,7 +9,6 @@ import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -30,8 +28,6 @@ import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import entities.Player;
-import guis.GuiRenderer;
-import guis.GuiTexture;
 
 public class MainGameLoop {
 
@@ -93,9 +89,6 @@ public class MainGameLoop {
 		Player player = new Player(playerTexturedModel, new Vector3f(0, 0, 0), 0, 180, 0, 0.6f);
 		Camera camera = new Camera(player);
 
-		List<GuiTexture> guiTextures = new ArrayList<GuiTexture>();
-
-		GuiRenderer guiRenderer = new GuiRenderer(loader);
 		WaterFrameBuffers buffers = new WaterFrameBuffers();
 		
 		WaterShader waterShader = new WaterShader();
@@ -130,13 +123,11 @@ public class MainGameLoop {
 			renderer.renderScene(entities, terrains, lights, camera, new Vector4f(0, -1, 0, 15));
 			
 			waterRenderer.render(waters, camera, sun);
-			guiRenderer.render(guiTextures);
 			
 			DisplayManager.updateDisplay();
 		}
 
 		buffers.cleanUp();
-		guiRenderer.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();
