@@ -8,12 +8,12 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/peter/workspace/3D Game Engine/lib/native/linux"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/peter/workspace/3D Game Engine/lib/jars/lwjgl.jar">
+	<classpathentry kind="lib" path="/home/peter/Dokumente/IM15 Semester 1/ACG_Projekt/3D Game Engine/lib/jars/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="G:/Mis documentos/Programación/GitHub/3D-Game-Engine-ThinMatrix/3D Game Engine/lib/native-win"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/peter/workspace/3D Game Engine/lib/jars/slick-util.jar"/>
-	<classpathentry kind="lib" path="/home/peter/workspace/3D Game Engine/lib/jars/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="/home/peter/Dokumente/IM15 Semester 1/ACG_Projekt/3D Game Engine/lib/jars/slick-util.jar"/>
+	<classpathentry kind="lib" path="/home/peter/Dokumente/IM15 Semester 1/ACG_Projekt/3D Game Engine/lib/jars/lwjgl_util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
