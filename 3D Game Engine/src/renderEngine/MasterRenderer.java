@@ -14,9 +14,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import shaders.StaticShader;
 import shaders.TerrainShader;
-import skybox.SkyboxRenderer;
 import terrains.Terrain;
-import water.WaterShader;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
@@ -39,8 +37,6 @@ public class MasterRenderer {
 	private TerrainRenderer terrainRenderer;
 	private TerrainShader terrainShader = new TerrainShader();
 
-	private SkyboxRenderer skyboxRenderer;
-
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 
@@ -49,7 +45,6 @@ public class MasterRenderer {
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
-		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
 	}
 
 	public Matrix4f getProjectionMatrix() {
@@ -84,7 +79,6 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
-		skyboxRenderer.render(camera, RED, GREEN, BLUE);
 		terrains.clear();
 		entities.clear();
 	}
